@@ -18,14 +18,19 @@ export function Home() {
   const [toggleTodo] = useToggleTodoMutation();
 
   const handleAdd = async () => {
-    if (newTodo.trim()) {
-      try {
-        await addTodo({ title: newTodo, description: newDesc }).unwrap();
-        setNewTodo('');
-        setNewDesc('');
-      } catch (error) {
-        console.error('Failed to add todo:', error);
-      }
+    if (newTodo.trim() === "") {
+      alert('Title is required');
+      return;
+    }
+    try {
+      // Wait for the mutation to complete
+      await addTodo({ title: newTodo, description: newDesc }).unwrap();
+      // Clear inputs only after successful addition
+      setNewTodo('');
+      setNewDesc('');
+    } catch (error) {
+      console.error('Failed to add todo:', error);
+      // Don't clear inputs if there was an error
     }
   };
 

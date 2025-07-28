@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const todoApi = createApi({
   reducerPath: 'todoApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:5000/api/todos',
+    baseUrl: 'https://todo-list-backend-jade.vercel.app/api/todos',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
       if (token) {

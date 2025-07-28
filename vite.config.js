@@ -1,20 +1,23 @@
-import tailwindcss from '@tailwindcss/vite'
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path' 
-import { fileURLToPath } from 'url'
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+import { fileURLToPath } from "url";
 
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    react()
-  ],
+  plugins: [tailwindcss(), react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'), // ✅ Alias @ → /src
+      "@": path.resolve(__dirname, "./src"), // ✅ Alias @ → /src
     },
   },
-})
+
+  test: {
+    // src/setupTests.js
+    environment: "jsdom",
+    globals: true,
+    setupFiles: "./src/setupTests.js", // you'll create this
+  },
+});
