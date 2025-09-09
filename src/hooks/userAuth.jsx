@@ -8,8 +8,9 @@ const useUserAuth = () => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [error, setError] = useState(null);
 
-  const { data: userData, error, isLoading } = useSelector((state) => state.auth);
+  const { data: userData, error: userDataError, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (userData && userData.user && userData.token) {
@@ -28,11 +29,15 @@ const useUserAuth = () => {
       logout();
       setIsLoggedIn(false);
     } catch (error) {
-      console.error('Error logging out:', error);
+      setError(error);
     }
   };
 
-  return { user, token, isLoggedIn, handleLogout };
+  if (userDataError) {
+    setError(userDataError);
+  }
+
+  return { user, token, isLoggedIn, handleLogout, error };
 };
 
 export default useUserAuth;

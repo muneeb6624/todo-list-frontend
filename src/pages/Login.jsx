@@ -34,6 +34,8 @@ function Login() {
       posthog.identify(res.user._id, { username: res.user.name });
       posthog.capture('user_logged_in', { username: res.user.name });
 
+      localStorage.setItem('token', res.token); // Store token in localStorage
+
       navigate('/home');
     } catch (err) {
       console.error('Login error:', err);

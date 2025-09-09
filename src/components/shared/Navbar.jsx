@@ -1,10 +1,27 @@
 // client/src/components/shared/Navbar.jsx
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import useUserAuth from '../../hooks/userAuth';
+//import useUserAuth from '../../hooks/userAuth';
+import { useNavigate } from 'react-router-dom';
  
 const Navbar = () => {
-  const { user, isLoggedIn, handleLogout } = useUserAuth();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  const token = localStorage.getItem('token');
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    navigate('/login');
+  };
+
+  useEffect(()=> {
+    if (token !== null) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [token]);
 
   return (
     <nav className="bg-blue-800 shadow-md py-4">
@@ -15,7 +32,7 @@ const Navbar = () => {
         <div className="flex items-center">
           {isLoggedIn ? (
             <div className="flex items-center">
-              <span className="mr-4 text-white">{user.name}</span>
+              <span className="mr-4 text-white">{user?.name}</span>
               <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                 onClick={handleLogout}
