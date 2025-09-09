@@ -25,4 +25,4 @@ jobs:
             npm install
             npm run build
             sudo systemctl restart nginx
-            echo "Deployment to EC2 completed."
+            echo "Deployment to EC2 completed." 
